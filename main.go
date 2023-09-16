@@ -54,6 +54,8 @@ func main() {
 	api.POST("/campaign-images", authMiddleware(authService, userService), campaigns.UploadImage)
 
 	api.GET("/campaigns/:id/transactions", authMiddleware(authService, userService), transactionHandler.GetCampaignTransactions)
+	api.GET("/transactions", authMiddleware(authService, userService), transactionHandler.GetUserTransactions)
+
 	// input := campaign.CreateCampaignInput{}
 	// input.Name = "Hallo ini campaign"
 	// input.ShortDescription = "Desklripsi pendek"
