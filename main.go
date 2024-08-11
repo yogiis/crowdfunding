@@ -34,6 +34,16 @@ func main() {
 	authService := auth.NewService()
 	transactionService := transaction.NewService(transactionRepository, campaignRepository)
 
+	// user, _ := userService.GetUserById(2)
+
+	// input := transaction.CreateTransactionInput{
+	// 	CampaignId: 7,
+	// 	Amount:     1000,
+	// 	User:       user,
+	// }
+
+	// transactionService.CreateTransaction(input)
+
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaigns := handler.NewCampaignHandler(campaignService)
 	transactionHandler := handler.NewTransactionHandler(transactionService)
@@ -55,6 +65,7 @@ func main() {
 
 	api.GET("/campaigns/:id/transactions", authMiddleware(authService, userService), transactionHandler.GetCampaignTransactions)
 	api.GET("/transactions", authMiddleware(authService, userService), transactionHandler.GetUserTransactions)
+	api.POST("/transactions", authMiddleware(authService, userService), transactionHandler.CreateTransaction)
 
 	// input := campaign.CreateCampaignInput{}
 	// input.Name = "Hallo ini campaign"
@@ -70,7 +81,7 @@ func main() {
 	// 	log.Fatal(err.Error())
 	// }
 
-	router.Run()
+	router.Run("localhost:8181")
 
 	// input dari user
 	// handler, mapping input dari user -> struct input
